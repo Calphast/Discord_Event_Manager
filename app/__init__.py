@@ -1,4 +1,5 @@
 import os
+import sqlite3
 
 import app.commands
 from app.extentions import clients
