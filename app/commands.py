@@ -1,4 +1,4 @@
-from .database.controller import input_new_event
+from .database.controller import input_new_event, delete_all_events, display_events
 
 from discord import Interaction
 from .extentions import clients, commands
@@ -14,25 +14,21 @@ async def create_new_event(ctx: Interaction, name: str, date: str):
     await input_new_event(server_id=server_id, user_id=user_id, event_name=name, event_date=date)
     await ctx.response.send_message(f"Created Event {name} on {date} by {ctx.user.mention}")
 
-#unfinished commands:
+@commands.command(name="clear_database") 
+async def clear_all_events(ctx: Interaction):
+    user_id = ctx.user.id
+    result = await delete_all_events(user_id=user_id)
+    if(result == False):
+        await ctx.response.send_message(f"You do not have permission to use this command, you user id = {user_id}")
+    elif(result == True):
+        await ctx.response.send_message("Database Cleared")
 
-'''
-@clients.command(name="display_events", pass_context=True)    
-async def display_events(ctx):
-    await ctx.send("Function not finished")
-    
-@clients.command(name="clear_all_events", pass_context=True) 
-async def clear_all_events(ctx):
-    server_owner = clients.get_user(int(ctx.guild.owner.id))
-    user_message = clients.get_user(int(ctx.message.author.id))
-    if(user_message != server_owner):
-        await ctx.send("You are not allowed to use this command!")
-    else:
-        def check(message: discord.message):
-            return message.channel == ctx.channel and message.author 
-        await ctx.send("Warning: This will remove all events from this server, are you sure you want to proceed?: ")
-        
-        cursor.execute("DELETE FROM Main WHERE (server_id = ?);", (str(ctx.message.guild.id),))
-        db.commit()
-        await ctx.send("Events Cleared")
-'''
+
+#Unfinished commands:
+@commands.command(name="my_events")
+async def get_user_events(ctx: Interaction):
+    user_id = ctx.user.id
+    events: list = await display_events(user_id)
+    ctx.message(f"You have {len(events)} active events.")
+    for i in len(events):
+        ctx.response.send_message(f"{events[i]}")
