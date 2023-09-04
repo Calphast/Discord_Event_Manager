@@ -1,6 +1,7 @@
 import os
 import sqlite3
 
+from app.database import controller
 import app.commands
 from app.extentions import clients, commands
 from app.database.database import engine, base

@@ -1,19 +1,18 @@
-import datetime
-import sqlite3
+from .database.controller import input_new_event
 
 from discord import Interaction
-import discord
-from app.extentions import clients, commands
+from .extentions import clients, commands
 
 @commands.command(name='test')
 async def test(ctx: Interaction):
     await ctx.response.send_message("test")
     
-#@commands.command(name="create_new_event")
-#async def create_new_event(ctx: Interaction, name: str, date: str):
-    #cursor.execute("INSERT INTO Main VALUES (?, ?, ?, ?);", (str(ctx.guild_id), str(ctx.user.id), name, date,))
-    #await ctx.response.send_message(f"Created Event {name} on {date} by {ctx.user.mention}")
-    #db.commit()
+@commands.command(name="create_new_event")
+async def create_new_event(ctx: Interaction, name: str, date: str):
+    server_id = ctx.guild_id
+    user_id = ctx.user.id
+    await input_new_event(server_id=server_id, user_id=user_id, event_name=name, event_date=date)
+    await ctx.response.send_message(f"Created Event {name} on {date} by {ctx.user.mention}")
 
 #unfinished commands:
 
