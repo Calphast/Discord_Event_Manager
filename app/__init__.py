@@ -3,7 +3,7 @@ import sqlite3
 
 import app.commands
 from app.extentions import clients, commands
-from app.database.database import engine
+from app.database.database import engine, base
 
 from dotenv import load_dotenv
 load_dotenv(dotenv_path='app\.env')
@@ -13,7 +13,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 @clients.event
 async def on_ready():
     print("attempting connection")
-    engine.connect()
+    base.metadata.create_all(engine)
     print("connected!")
     print("sync commenced")
     await commands.sync()
