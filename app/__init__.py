@@ -2,7 +2,7 @@ import os
 import sqlite3
 
 import app.commands
-from app.extentions import clients
+from app.extentions import clients, commands
 
 from dotenv import load_dotenv
 load_dotenv(dotenv_path='app\.env')
@@ -12,7 +12,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 @clients.event
 async def on_ready():
     print("sync commenced")
-    await clients.tree.sync()
+    await commands.sync()
     print(f"sync complete")
     print(
         f'{clients.user} is online'
