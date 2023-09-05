@@ -5,7 +5,6 @@ from typing import Any
 import os
 
 class Migration:
-    sqlalchemy = None
     cfg = Config()
     
     @staticmethod
