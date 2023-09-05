@@ -1,4 +1,4 @@
-import os
+from os import getenv
 
 from .database import controller
 import .commands
@@ -8,8 +8,6 @@ from .database.migrate import Migration
 
 from dotenv import load_dotenv
 load_dotenv(dotenv_path='app\.env')
-
-TOKEN = os.getenv('DISCORD_TOKEN')
 
 @clients.event
 async def on_ready():
@@ -35,4 +33,4 @@ def run():
         
     print("db connected!")
     print("app is now running")
-    clients.run(TOKEN)
+    clients.run(getenv('DISCORD_TOKEN'))
