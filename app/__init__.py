@@ -1,5 +1,4 @@
 import os
-import sqlite3
 
 from .database import controller
 import .commands
