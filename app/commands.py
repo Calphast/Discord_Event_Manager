@@ -1,4 +1,5 @@
 from typing import Concatenate
+import re
 from .database.controller import input_new_event, delete_all_events, display_events
 
 from discord import Interaction
@@ -30,6 +31,10 @@ async def clear_all_events(ctx: Interaction):
 async def get_user_events(ctx: Interaction):
     user_id = ctx.user.id
     events: dict= await display_events(user_id)
+    result: str = ""
     await ctx.response.send_message(f"You have {len(events)} events:")
     for i in range(len(events)):
-        await ctx.followup.send(events[i])
+        if(i != -1):
+            result = result.__add__(str(events[i]))
+            result = result.__add__("\n")
+    await ctx.followup.send(result) 
