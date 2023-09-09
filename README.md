@@ -2,6 +2,8 @@
 
 wip discord bot to manage events and more
 
+documentation + instalation will be provided once developed
+
 ## Dependencies
 
 discord.py
