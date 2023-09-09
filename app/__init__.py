@@ -13,9 +13,6 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 @clients.event
 async def on_ready():
-    print("attempting connection")
-    base.metadata.create_all(engine)
-    print("connected!")
     print("sync commenced")
     await commands.sync()
     print("sync complete!")
@@ -25,4 +22,7 @@ async def on_ready():
 
 def run():
     print("app is now running")
+    print("attempting connection")
+    base.metadata.create_all(engine)
+    print("connected!")
     clients.run(TOKEN)

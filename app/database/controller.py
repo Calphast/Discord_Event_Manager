@@ -1,6 +1,6 @@
 import os
 
-from sqlalchemy import insert, delete, select
+from sqlalchemy import insert, delete, select, text
 from app.database.database import user_base, engine
 
 async def input_new_event(server_id, user_id, event_name, event_date):
@@ -26,5 +26,8 @@ async def delete_all_events(user_id):
         return True
     
 async def display_events(USER_id):
-    smtn = select(user_base.event_title).where(user_id = USER_id) 
-    return smtn
+    smtn = select(user_base.event_title, user_base.event_date).where(user_base.user_id == USER_id)
+    with engine.connect() as conn:
+        result = conn.execute(smtn)
+        result_as_dict = result.mappings().all()
+    return result_as_dict

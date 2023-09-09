@@ -1,3 +1,4 @@
+from typing import Concatenate
 from .database.controller import input_new_event, delete_all_events, display_events
 
 from discord import Interaction
@@ -28,7 +29,7 @@ async def clear_all_events(ctx: Interaction):
 @commands.command(name="my_events")
 async def get_user_events(ctx: Interaction):
     user_id = ctx.user.id
-    events: list = await display_events(user_id)
-    ctx.message(f"You have {len(events)} active events.")
-    for i in len(events):
-        ctx.response.send_message(f"{events[i]}")
+    events: dict= await display_events(user_id)
+    await ctx.response.send_message(f"You have {len(events)} events:")
+    for i in range(len(events)):
+        await ctx.followup.send(events[i])
