@@ -31,3 +31,11 @@ async def display_events(USER_id):
         result = conn.execute(smtn)
         result_as_dict = result.mappings().all()
     return result_as_dict
+
+async def search_for_events(event_name, server_id):
+    smtn = select(user_base.event_title, user_base.event_date, user_base.users_attached).where(user_base.event_title == event_name and user_base.server_id == server_id)
+    with engine.connect() as conn:
+        result = conn.execute(smtn)
+        result_as_dict = result.mappings().all()
+    return result_as_dict
+        

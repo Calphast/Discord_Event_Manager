@@ -1,3 +1,4 @@
+from typing import Optional
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 import sqlalchemy
@@ -16,6 +17,7 @@ class user_base(base):
     user_id = Column(Integer)
     event_title = Column(String, primary_key=True)
     event_date = Column(String)
+    users_attached = Column(String, nullable=True)
     
     def __init__(self, server_id, user_id, event_title, event_date):
         self.server_id = server_id
