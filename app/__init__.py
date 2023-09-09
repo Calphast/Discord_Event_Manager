@@ -1,10 +1,10 @@
 import os
 import sqlite3
 
-from app.database import controller
+from .database import controller
 import app.commands
-from app.extentions import clients, commands
-from app.database.database import engine, base
+from .extentions import clients, commands
+from .database.database import engine, base
 
 from dotenv import load_dotenv
 load_dotenv(dotenv_path='app\.env')

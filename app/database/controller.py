@@ -1,6 +1,4 @@
-import os
-
-from sqlalchemy import insert, delete, select, text
+from sqlalchemy import insert, delete, select
 from app.database.database import user_base, engine
 
 async def input_new_event(server_id, user_id, event_name, event_date):
@@ -13,6 +11,7 @@ async def input_new_event(server_id, user_id, event_name, event_date):
             pass
 
 async def delete_all_events(user_id):
+    #checks if it me, this command is solely for experimental purposes
     if(user_id != 776521397211758592):
         return False
     if(user_id == 776521397211758592):
@@ -25,8 +24,8 @@ async def delete_all_events(user_id):
                 pass
         return True
     
-async def display_events(USER_id):
-    smtn = select(user_base.event_title, user_base.event_date).where(user_base.user_id == USER_id)
+async def display_events(user_id):
+    smtn = select(user_base.event_title, user_base.event_date).where(user_base.user_id == user_id)
     with engine.connect() as conn:
         result = conn.execute(smtn)
         result_as_dict = result.mappings().all()

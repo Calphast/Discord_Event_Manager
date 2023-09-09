@@ -1,8 +1,6 @@
-from typing import Optional
 from sqlalchemy import Column, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 import sqlalchemy
-from sqlalchemy.ext.asyncio import create_async_engine
 
 engine = create_engine("sqlite:///main.sqlite")
 

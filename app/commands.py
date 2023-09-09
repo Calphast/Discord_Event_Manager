@@ -27,7 +27,7 @@ async def clear_all_events(ctx: Interaction):
 async def get_user_events(ctx: Interaction):
     user_id = ctx.user.id
     events: dict= await display_events(user_id)
-    result: str = ""
+    result: str = ""        #instatiated because compiler will freakout if not
     for i in range(len(events)):
         if(i != -1):
             result = result.__add__(str(events[i]))
