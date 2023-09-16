@@ -1,4 +1,4 @@
-from sqlalchemy import insert, delete, select
+from sqlalchemy import insert, delete, select, update
 from app.database.database import user_base, engine
 
 async def input_new_event(server_id, user_id, event_name, event_date):
@@ -38,3 +38,11 @@ async def search_for_events(event_name, server_id):
         result_as_dict = result.mappings().all()
     return result_as_dict
         
+async def add_user_to_event(user_id, event_name, server_id, user_to_add: list):
+    smtn = update(user_base).where(user_base.user_id == user_id, user_base.event_title == event_name, user_base.server_id == server_id).values(users_attached=user_to_add)
+    with engine.connect() as conn:
+        try:
+            conn.execute(smtn)
+            conn.commit()
+        except:
+            pass

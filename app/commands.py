@@ -1,7 +1,8 @@
-from .database.controller import input_new_event, delete_all_events, display_events, search_for_events
+import discord
+from .database.controller import input_new_event, delete_all_events, display_events, search_for_events, add_user_to_event
 
 from discord import Interaction
-from .extentions import commands
+from .extentions import commands, clients
 
 @commands.command(name='test')
 async def test(ctx: Interaction):
@@ -42,3 +43,14 @@ async def find_event(ctx: Interaction, name_of_event: str):
         await ctx.response.send_message(result)
     else:
         await ctx.response.send_message("Event not found")
+        
+@commands.command(name="add_to")
+async def add_to_event(ctx: Interaction, event_name: str, user_to_add: discord.User):
+    #user_to_add_id: [str]
+    #user_to_add_id.append(ctx.message.mentions)
+    user_to_add_id = user_to_add.id
+    await add_user_to_event(user_id=ctx.user.id, 
+                            event_name=event_name, 
+                            server_id=ctx.guild_id,
+                            user_to_add=str(user_to_add_id))
+    await ctx.response.send_message(f"added {user_to_add} to {event_name}")
